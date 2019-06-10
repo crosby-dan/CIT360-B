@@ -6,15 +6,28 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+/**
+ * @author Dan Crosby  CIT360
+ * 3/6/19
+ * A Servlet to demonstrate the battle results from the setup provided by index.jsp.
+ */
 @WebServlet(name = "Skaro", urlPatterns={"/Servlet"})
 public class Skaro extends HttpServlet {
+
+    /**
+     * Method doPost - The main method for receiving the form submission and creating a response.
+     *
+     * @param  request - a link to the contents of the submitting page.
+     * @param  response - any response will be sent here.
+     */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         PrintWriter out = response.getWriter();
         response.setContentType("text/html");
 
-        String output = "<html><head></head><body><frameset>"; // s variable will be the HTML output.
-        String battleNarrative = "";  // t variable will be the narrative for the battle setup
-        String battleResults = "";  // r variable will be the battle's results
+        //Define variables for calculating output
+        String output = "<html><head></head><body><frameset>";
+        String battleNarrative = "";
+        String battleResults = "";
 
         try {
             //Determine which Dalek squadron to use.
@@ -24,6 +37,8 @@ public class Skaro extends HttpServlet {
             //Determine the attack target
             String myTarget = request.getParameter("myTarget");
 
+            //Checkboxes are not present in HTML submissions unless the box was checked, so I'm checking
+            //for whether or not the field is present, rather than whether or not the box is checked.
             if (d1!=null) {
                 output=output + "<img src='img/daleksec.jpg' height='100px' width='100px'>";
                 battleNarrative=battleNarrative + "<p>Fighting a battle with Dalek Sec";
@@ -49,6 +64,9 @@ public class Skaro extends HttpServlet {
             //s=s+"<p>myTarget=" + myTarget + "</p>";
             //s=s+"<p>Attack Destination : " + myTarget + "</p>";
 
+            //Depending on the target of the attack, construct the final output.
+            //At this point there is no fancy randomization logic so the result is calculated based on
+            //the attack target rather than any random circumstance.
             if (myTarget.equals("1")) {
                 output=output + "<img src='img/dallas.jpg' height='100px' width='100px'>";
                 battleNarrative=battleNarrative + " against the city of Dallas!</p>";
@@ -68,6 +86,7 @@ public class Skaro extends HttpServlet {
                 battleResults=battleResults + "<img src='img/faith.jpg' height='200px' width='200px'>";
             }
 
+            //Output the combined output
             output=output+battleNarrative + "<h2>Battle Results:</h2>" + battleResults +"</frameset></body></html>";
             out.println(output);
         }
@@ -77,7 +96,12 @@ public class Skaro extends HttpServlet {
             throw new ServletException();
         }
     }
-
+    /**
+     * Method doGet - This application relies on Post rather than get, so this is for error handling only.
+     *
+     * @param  request - a link to the contents of the submitting page.
+     * @param  response - any response will be sent here.
+     */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();

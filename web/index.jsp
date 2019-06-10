@@ -1,9 +1,9 @@
 <%--
-  Created by IntelliJ IDEA.
-  User: dcros
-  Date: 5/28/2019
-  Time: 8:35 PM
-  To change this template use File | Settings | File Templates.
+/**
+ * @author Dan Crosby  CIT360
+ * 3/6/19
+ * A web page to demonstrate the servlet named Skaro.
+ */
 --%>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
